@@ -10,12 +10,12 @@ var paths = {
 
 gulp.task("copy-server" , function() {
     return gulp.src(paths.server)
-        .pipe(gulp.dest("dist"));
+        .pipe(gulp.dest("build"));
 });
 
 gulp.task("copy-html", function () {
     return gulp.src(paths.pages)
-        .pipe(gulp.dest("dist"));
+        .pipe(gulp.dest("build"));
 });
 
 gulp.task("bundle", function () {
@@ -29,7 +29,7 @@ gulp.task("bundle", function () {
     .plugin(tsify)
     .bundle()
     .pipe(source('bundle.js'))
-    .pipe(gulp.dest("dist/js"));
+    .pipe(gulp.dest("build/js"));
 });
 
 gulp.task("default", () => {
