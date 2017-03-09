@@ -1,0 +1,14 @@
+{
+    "files": [
+        "ts/app.ts",
+        "ts/divcal.ts"
+    ],
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es5" , 
+        "sourceMap": true ,
+        "module": "commonjs" ,
+        "rootDir": "ts",
+        "outDir": "js"        
+    }
+}
