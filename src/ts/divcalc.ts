@@ -7,11 +7,11 @@ class DividendCalc {
         this.BaseNumberOfShares = baseNumberOfShares;
     }
 
-    public Print() {
+    public print() {
         console.log(this.toString());
     }
 
-    public ToString = () => 
+    public toString = () => 
         `{ sharePrice: ${this.SharePrice}, baseNumberOfShares: ${this.BaseNumberOfShares} }`
 }
 
