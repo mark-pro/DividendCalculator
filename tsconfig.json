@@ -1,7 +1,7 @@
 {
     "files": [
-        "ts/app.ts",
-        "ts/divcal.ts"
+        "src/ts/app.ts",
+        "src/ts/divcalc.ts"
     ],
     "compilerOptions": {
         "noImplicitAny": true,

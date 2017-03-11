@@ -31,30 +31,45 @@ class DividendCalc {
         this.numberOfYears = numberOfYears;
     }
 
-    public start() {
-        let dividend = this.baseNumberOfShares * this.sharePrice * this.dividendPercentage / 100;
-        dividend = Round(dividend, 2);
-        console.log(dividend);
-        let newShares = Math.floor(dividend / this.sharePrice);
-        let remainingMoney = Round(dividend % this.sharePrice, 2);
-        let result = new Result(this.baseNumberOfShares + newShares, remainingMoney, this.sharePrice);
+    private setFirstResult() {
+        let total = this.baseNumberOfShares * this.sharePrice;
+        let result = new Result(
+            this.baseNumberOfShares + this.calculateNewShares(total), 
+            this.calculateRemainingMoney(total), 
+            this.sharePrice
+        );
+
         this.results.push(result);
-        this.calculate(result, this.numberOfYears - 1);
     }
 
-    private calculate(result: Result, count: number) {
-        let total = result.remainingMoney + (this.sharePrice * result.numberOfShares);
-        let dividend = total * (this.dividendPercentage / 100);
-        let newShares = Math.floor(dividend / this.sharePrice);
-        let remainingMoney = Round(dividend % this.sharePrice, 2);
-        let newResult = new Result(
-            newShares + result.numberOfShares,
-            remainingMoney,
-            this.sharePrice);
-        this.results.push(newResult);
-        if (--count > 0)
-            this.calculate(newResult, count);
+    public start() {
+        this.calculate(this.numberOfYears - 1);
     }
+
+    private calculate(count: number) {
+        let previousResult = this.results[this.results.length - 1];
+        let total = previousResult.remainingMoney + 
+            (this.sharePrice * previousResult.numberOfShares);
+        this.results.push(this.createResult(total));
+        if (--count > 0)
+            this.calculate(count);
+    }
+
+    private calculateDividend = (total: number) =>
+        total * (this.dividendPercentage / 100); 
+
+    private calculateNewShares = (total: number) =>
+        Math.floor(this.calculateDividend(total) / this.sharePrice);
+    
+    private calculateRemainingMoney = (total: number) =>
+        Round(this.calculateDividend(total) % this.sharePrice, 2);
+
+    private createResult = (total: number) =>
+        new Result(
+            this.calculateNewShares(total) + this.results[this.results.length - 1].numberOfShares ,
+            this.calculateRemainingMoney(total) ,
+            this.sharePrice
+        );
 
     public print() {
         console.log(this.toString());
