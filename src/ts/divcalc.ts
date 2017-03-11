@@ -9,7 +9,8 @@ class Result {
         this.folioValue = this.numberOfShares * pricePerShare + remainingMoney;
     }
 
-    public toString = () => JSON.stringify(this);
+    public toString = () => 
+        JSON.stringify(this);
 }
 
 class DividendCalc {
@@ -29,9 +30,10 @@ class DividendCalc {
         this.baseNumberOfShares = baseNumberOfShares;
         this.dividendPercentage = dividendPercentage;
         this.numberOfYears = numberOfYears;
+        this.setFirstResult();
     }
 
-    private setFirstResult() {
+    private setFirstResult = () => {
         let total = this.baseNumberOfShares * this.sharePrice;
         let result = new Result(
             this.baseNumberOfShares + this.calculateNewShares(total), 
@@ -42,15 +44,15 @@ class DividendCalc {
         this.results.push(result);
     }
 
-    public start() {
-        this.calculate(this.numberOfYears - 1);
-    }
+    public start = () =>
+        this.calculate(4 * this.numberOfYears - 1);
 
     private calculate(count: number) {
         let previousResult = this.results[this.results.length - 1];
         let total = previousResult.remainingMoney + 
             (this.sharePrice * previousResult.numberOfShares);
         this.results.push(this.createResult(total));
+        
         if (--count > 0)
             this.calculate(count);
     }
@@ -75,10 +77,11 @@ class DividendCalc {
         console.log(this.toString());
     }
 
-    public toString = () => JSON.stringify(this);
+    public toString = () => 
+        JSON.stringify(this);
 }
 
 let Round = (value: number, decimals: number) =>
-    Number(value.toFixed(decimals));
+    Number(+value.toFixed(decimals));
 
 export { DividendCalc };
